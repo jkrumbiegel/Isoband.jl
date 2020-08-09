@@ -3,8 +3,12 @@ uuid = "f1662d9f-8043-43de-a69a-05efc1cc6ff4"
 authors = ["Julius Krumbiegel <julius.krumbiegel@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+isoband_jll = "9a68df92-36a6-505f-a73e-abb412b6bfb4"
+
 [compat]
 julia = "1"
+isoband_jll = "0.2.2"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
