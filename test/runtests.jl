@@ -322,3 +322,27 @@ end
     @test out.id ≣ 1:2
     @test length(out.id) == 4
 end
+
+@testset "All elementary segments are calculated correctly" begin
+    # a matrix that requires all elementary segments for isolines
+    z = [0 0 0 1 1 0 1 1;
+        0 0 0 1 1 0 1 1;
+        0 1 1 0 1 1 0 0;
+        1 1 0 0 0 1 1 0;
+        1 0 1 1 0 0 0 1]
+    out = isolines(1:8, 5:-1:1, z, 0.5)
+
+    @test 1000 * out.x + out.y ≣ 1000 * [7.5, 7.0, 6.0, 5.5, 5.0, 4.5, 4.0, 3.5,
+            3.0, 2.5, 3.0, 4.0, 4.5, 2.5, 2.0, 1.5,
+            8.0, 7.0, 6.5, 7.0, 7.5, 8.0, 6.5, 6.5,
+            6.0, 5.5, 5.5, 3.5, 3.5, 3.0, 2.0, 1.5,
+            1.0] +
+            [1.0, 1.5, 1.5, 2.0, 2.5, 3.0, 3.5, 3.0,
+            2.5, 2.0, 1.5, 1.5, 1.0, 1.0, 1.5, 1.0,
+            3.5, 3.5, 3.0, 2.5, 2.0, 1.5, 5.0, 4.0,
+            3.5, 4.0, 5.0, 5.0, 4.0, 3.5, 3.5, 3.0,
+            2.5]
+
+    @test out.id ≣ 1:5
+    @test length(out.id) == 33
+end
