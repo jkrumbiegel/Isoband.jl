@@ -312,3 +312,13 @@ end
     @test 1000 * out.x + out.y ≣ 1000 * [2.5, 2.0, 1.5, 2.0, 2.5] + [2.0, 2.5, 2.0, 1.5, 2.0]
     @test out.id == ones(5)
 end
+
+@testset "NAs are handled correctly" begin
+    z = [NaN 0 0;
+        0 1 1;
+        0 1 1]
+    out = isolines(1:3, 3:-1:1, z, 0.5)
+    @test 1000 * out.x + out.y ≣ 1000 * [1.5, 1.5, 2.0, 3.0] + [2.0, 1.0, 2.5, 2.5]
+    @test out.id ≣ 1:2
+    @test length(out.id) == 4
+end
