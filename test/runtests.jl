@@ -346,3 +346,22 @@ end
     @test out.id ≣ 1:5
     @test length(out.id) == 33
 end
+
+
+@testset "Saddles" begin
+  # a matrix that contains all saddles (there are only two)
+  z = [0 1 0;
+       1 0 1]
+
+  out = isolines(1:3, 2:-1:1, z, 0.5)
+
+  @test 1000 * out.x + out.y ≣ 1000 * [2.5, 3.0, 2.5, 2.0, 1.5, 1.5, 1.0] + [2.0, 1.5, 1.0, 1.5, 1.0, 2.0, 1.5]
+  @test out.id ≣ 1:3
+  @test length(out.id) == 7
+
+  out = isolines(1:3, 2:-1:1, z, 0.6)
+
+  @test 1000 * out.x + out.y ≣ 1000 * [1.6, 2.0, 2.4, 3.0, 2.6, 1.0, 1.4] + [2.0, 1.6, 2.0, 1.4, 1.0, 1.4, 1.0]
+  @test out.id ≣ 1:3
+  @test length(out.id) == 7
+end
