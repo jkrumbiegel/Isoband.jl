@@ -13,6 +13,16 @@ struct ReturnValue
     len::Cint
 end
 
+"""
+    isobands(xs, ys, zs, low::Real, high::Real)
+
+Create one isoband from the matrix `zs` for the boundaries `low` and `high`.
+The rows of `zs` correspond to the linear spaced values in `ys` and the columns to `xs`.
+Returns a NamedTuple with two Vector{Float64} fields `x` and `y`, and the
+Vector{Int} field `id`. Each unique id marks one polygon, the polygons can be outer polygons or
+holes and are given in no particular order. Therefore, they must probably be post-processed to
+feed them to plotting packages.
+"""
 function isobands(xs, ys, zs, low::Real, high::Real)
     results = isobands(xs, ys, zs, Float64[low], Float64[high])
     results[1]
@@ -22,6 +32,16 @@ function isobands(xs::AbstractVector, ys::AbstractVector, zs::AbstractMatrix, lo
     isobands(Float64.(xs), Float64.(ys), Float64.(zs), Float64.(lows), Float64.(highs))
 end
 
+"""
+    isobands(xs::Vector{Float64}, ys::Vector{Float64}, zs::Matrix{Float64}, low_values::Vector{Float64}, high_values::Vector{Float64})
+
+Create a vector of isobands from the matrix `zs` for all pairs in `low_values` and `high_values`.
+The rows of `zs` correspond to the linear spaced values in `ys` and the columns to `xs`.
+Each entry of the return vector is a NamedTuple with two Vector{Float64} fields `x` and `y`, and the
+Vector{Int} field `id`. Each unique id marks one polygon, the polygons can be outer polygons or
+holes and are given in no particular order. Therefore, they must probably be post-processed to
+feed them to plotting packages.
+"""
 function isobands(
         xs::Vector{Float64},
         ys::Vector{Float64},
@@ -71,7 +91,14 @@ function isobands(
     groups
 end
 
+"""
+    isolines(xs, ys, zs, value::Real)
 
+Create one isoline from the matrix `zs` for `value`.
+The rows of `zs` correspond to the linear spaced values in `ys` and the columns to `xs`.
+Returns a NamedTuple with two Vector{Float64} fields `x` and `y`, and the
+Vector{Int} field `id`. Each unique id marks one line.
+"""
 function isolines(xs, ys, zs, value::Real)
     results = isolines(xs, ys, zs, Float64[value])
     results[1]
@@ -81,6 +108,14 @@ function isolines(xs::AbstractVector, ys::AbstractVector, zs::AbstractMatrix, va
     isolines(Float64.(xs), Float64.(ys), Float64.(zs), Float64.(values))
 end
 
+"""
+    isolines(xs::Vector{Float64}, ys::Vector{Float64}, zs::Matrix{Float64}, values::Vector{Float64})
+
+Create a vector of isolines from the matrix `zs` for all `values`.
+The rows of `zs` correspond to the linear spaced values in `ys` and the columns to `xs`.
+Each entry of the return vector is a NamedTuple with two Vector{Float64} fields `x` and `y`, and the
+Vector{Int} field `id`. Each unique id marks one line.
+"""
 function isolines(
         xs::Vector{Float64},
         ys::Vector{Float64},
