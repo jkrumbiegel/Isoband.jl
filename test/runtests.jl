@@ -270,3 +270,45 @@ end
   @test_throws ErrorException isobands(1:4, 1:4, m, [0.5, 1.5, 2.5], [0.5, 1.5])
   @test_throws ErrorException isobands(1:4, 1:4, m, [0.5, 1.5], [0.5, 1.5, 2.5])
 end
+
+
+
+#######################################################
+# isolines
+
+@testset "line segments get merged" begin
+    # two connected line segments get merged
+    z = [0 0 1;
+        1 1 1]
+    out = isolines(1:3, 2:-1:1, z, 0.5)
+    @test 1000 * out.x + out.y ≣ 1000 * [1, 2, 2.5] + [1.5, 1.5, 2.0]
+    @test out.id == ones(3)
+
+    # two unconnected line segments don't get merged
+    z = [0 1 0;
+        0 1 1]
+    out = isolines(1:3, 2:-1:1, z, 0.5)
+    @test 1000 * out.x + out.y ≣ 1000 * [2.5, 3.0, 1.5, 1.5] + [2.0, 1.5, 2.0, 1.0]
+    @test out.id ≣ 1:2
+    @test length(out.id) == 4
+
+    # two separate lines get merged in second row
+    z = [0 1 0;
+        0 1 0;
+        0 0 0]
+    out = isolines(1:3, 3:-1:1, z, 0.5)
+    @test 1000 * out.x + out.y ≣ 1000 * [2.5, 2.5, 2.0, 1.5, 1.5] + [3.0, 2.0, 1.5, 2.0, 3.0]
+    @test out.id == ones(5)
+
+    # circle gets closed
+    z = [0 0 0;
+        0 1 0;
+        0 0 0]
+    out = isolines(1:3, 3:-1:1, z, 0.5)
+    # circle is closed
+    @test out.x[1] == out.x[5]
+    @test out.y[1] == out.y[5]
+    # coords are correct
+    @test 1000 * out.x + out.y ≣ 1000 * [2.5, 2.0, 1.5, 2.0, 2.5] + [2.0, 2.5, 2.0, 1.5, 2.0]
+    @test out.id == ones(5)
+end
