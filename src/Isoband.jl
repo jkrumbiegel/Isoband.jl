@@ -116,11 +116,10 @@ function isolines(
     returnvalues = unsafe_wrap(Vector{ReturnValue}, result, nvalues, own = true)
 
     groups = map(returnvalues) do rv
-        n = rv[4]
-
-        xsr = unsafe_wrap(Vector{Cdouble}, rv[1], n, own = true)
-        ysr = unsafe_wrap(Vector{Cdouble}, rv[2], n, own = true)
-        idr = unsafe_wrap(Vector{Cint}, rv[3], n, own = true)
+        n = rv.len
+        xsr = unsafe_wrap(Vector{Cdouble}, rv.xs, n, own = true)
+        ysr = unsafe_wrap(Vector{Cdouble}, rv.ys, n, own = true)
+        idr = unsafe_wrap(Vector{Cint}, rv.ids, n, own = true)
         (x = xsr, y = ysr, id = idr)
     end
     
