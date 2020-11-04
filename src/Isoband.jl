@@ -53,8 +53,8 @@ function isobands(
     leny = length(ys)
     nrow, ncol = size(zs)
 
-    lenx != ncol && error("Length of x ($(length(xs))) must be equal to number of columns in z ($(size(z, 2)))")
-    lenx != ncol && error("Length of y $(length(ys)) must be equal to number of rows in z ($(size(z, 1))")
+    lenx != ncol && error("Length of x ($(length(xs))) must be equal to number of columns in z ($(size(zs, 2)))")
+    leny != nrow && error("Length of y $(length(ys)) must be equal to number of rows in z ($(size(zs, 1))")
 
     length(low_values) != length(high_values) && error("Number of low values ($(length(low_values)))and high values ($(length(high_values))) must be equal.")
 
