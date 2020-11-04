@@ -1,7 +1,7 @@
 name = "Isoband"
 uuid = "f1662d9f-8043-43de-a69a-05efc1cc6ff4"
 authors = ["Julius Krumbiegel <julius.krumbiegel@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 isoband_jll = "9a68df92-36a6-505f-a73e-abb412b6bfb4"
